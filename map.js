@@ -18,7 +18,7 @@ let ary = [
   
 // 三個人的身高各增加10公分
   
-//reduce()
+//map()
 ary.map((item) => item.height += 10);
 console.log(ary); 
 //三位的身高分別增加為160, 170, 180
