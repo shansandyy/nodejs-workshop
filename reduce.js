@@ -14,7 +14,7 @@ let ary = [
       name: 'Eva',
       height: 170
     },
-  ];
+];
   
 // 三個人的平均身高
   
