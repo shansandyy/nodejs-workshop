@@ -19,15 +19,17 @@ let ary = [
 // 找出 第一筆喜歡orange的人
   
 //find()
-let result = ary.find((item) => item.color === 'orange')
-console.log(result); 
+// let result = ary.find((item) => item.color === 'orange')
+// console.log(result); 
 //Mia like orange
   
   
 //for-loop
 function find(ary) {
   for (let i = 0; i < ary.length; i++) {
-    return ary[i];
+    if (ary.color === "orange") {
+      return ary[i];
+    }  
   }
 }
 console.log(find(ary));

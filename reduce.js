@@ -29,9 +29,9 @@ console.log(heightAvg);
 function reduce(ary) {
   let heightTtl = 0;
     for (let i = 0; i < ary.length; i++) {
-      heightTtl += ary[i].height;  
-      return heightTotle / ary.length;
+      heightTtl += ary[i].height; 
     }
+    return heightTtl / ary.length;
 }
 console.log(reduce(ary));
 //三位的平均身高160
