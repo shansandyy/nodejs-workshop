@@ -9,8 +9,8 @@ let queryDate = moment().format('YYYYMMDD'); //'20220814';
 
 (async () => {
   try {
-    let data = await fsPromises.readFile('stock.txt', 'utf8');
-        stockNo = data;
+    let stockNo = await fsPromises.readFile('stock.txt', 'utf8');
+    
     let response = await axios.get(`https://www.twse.com.tw/exchangeReport/STOCK_DAY`, {
       params: {
         response: 'json',
