@@ -13,6 +13,11 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.27.2",
-    "moment": "^2.29.4"
+<<<<<<< HEAD
+    "dotenv": "^16.0.1",
+=======
+>>>>>>> b4ab350b97b4134a9546e0b922729027f852990f
+    "moment": "^2.29.4",
+    "mysql2": "^2.3.3"
   }
 }
