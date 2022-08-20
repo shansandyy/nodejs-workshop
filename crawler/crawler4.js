@@ -25,7 +25,7 @@ const fs = require('fs/promises');
 
     //透過 split() 轉為陣列, pop()取得最後一筆 --> 用 [1] 若陣列改變容易取得錯誤資料 
     let stockName = suggestion.split('\t').pop();
-    console.log('stockName', stockName);
+    console.log('stockNo & stockName', stockNo, stockName);
 
     let queryDate = moment().format('YYYYMMDD'); //'20220814';
     let response = await axios.get(`https://www.twse.com.tw/exchangeReport/STOCK_DAY`, {
@@ -36,6 +36,7 @@ const fs = require('fs/promises');
       }
     })
     console.log(response.data);
+    
   } catch (e) {
     console.error(e);
   }
