@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { API_URL } from '../utils/config';
+
 
 const Stock = () => {
   const [error, setError] = useState(null);
@@ -10,7 +12,7 @@ const Stock = () => {
     let getStock =async ()=>{
       console.log('Stock', 'useEffect []');
       console.log('useEffect[]', data);
-      let response = await axios.get('http://localhost:3001/api/01/stocks');
+      let response = await axios.get(`${API_URL}/stocks`);
       // console.log(response);
       setData(response.data);
       console.log('useEffect[] after set', data);
