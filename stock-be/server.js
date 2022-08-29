@@ -1,4 +1,6 @@
+// router: mini app
 const express = require('express');
+
 // 初始化 dotenv
 require('dotenv').config();
 // 利用 express 這個框架/函式庫 來建立一個 web application
@@ -8,23 +10,29 @@ const app = express();
 // 至少在同一個檔案中，可以放到最上方統一管理
 // 目標是: 只需要改一個地方，全部的地方就生效
 // 降低漏改到的風險 -> 降低程式出錯的風險
-const port = process.env.SERVER_PORT;
+// 用 || 預設port
+const port = process.env.SERVER_PORT  || 3001;
 
+// 允許跨源(ex: fe port3000 要對 be port3001)
+// 只有後端可以允許
+// npm i cors  -->  第三方提供的 cors 中間件
+// 是瀏覽器鎖住
+// Access-Control-Allow-Origin: * --> *表示所有前端都可以打
 const cors = require('cors');
 app.use(cors());
 
-// 使用資料庫
-// const mysql = require('mysql2/promise');  也可以使用
-const mysql = require('mysql2');
-let pool = mysql.createPool({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    // 限制 pool 連線數的上限
-    connectionLimit: 10,
-  }).promise();
+// 使用情境: 當前後端網址不同時，只想允許自己的前端來跨源存取
+//          就可以利用 origin 這個設定來限制，不然預設是 * (全部)
+// const corsOptions = {
+//   origin: ['http://localhost:3000'],
+// };
+// app.use(cors(corsOptions));
+
+// 引用 server 需要的資料庫模組
+const pool = require('./utils/db');
+
+// 要讓 express 認得json，要用這個中間件(post)
+app.use(express.json());
 
 // 一般的 middleware
 app.use((req, res, next) => {
@@ -47,20 +55,13 @@ app.get('/', (req, res, next) => {
   res.send('Hello Express');
 });
 
-//API
-app.get('/api/01/stocks',async (req, res, next)=>{
-  // 取得 Array[0] 的兩種寫法
-  
-  // 1. let result =await pool.execute('SELECT * FROM stocks');
-  // let data = result[0]
+// 引用 stocks
+let stockRouter = require('./routers/stocks');
+app.use('/api/1.0/stocks', stockRouter);
 
-  // 2. ES6 寫法
-  let [data] = await pool.execute('SELECT * FROM stocks');
-  // console.log('result, data', data);
-  res.json(data)
-})
-
-
+// 引用 auth
+let authRouter = require('./routers/auth');
+app.use(authRouter);
 
 app.use((req, res, next) => {
   console.log('這是中間件 B');
